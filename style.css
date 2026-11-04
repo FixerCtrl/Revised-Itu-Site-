@@ -866,3 +866,87 @@ footer{padding-top:40px;padding-bottom:30px}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+
+/* Professional profile and social pathways */
+.nav-cta{white-space:nowrap;gap:8px}
+.linkedin-mark{
+  display:inline-grid;
+  place-items:center;
+  width:20px;
+  height:20px;
+  border:1.5px solid currentColor;
+  border-radius:4px;
+  font:700 .68rem/1 Inter,sans-serif;
+  letter-spacing:-.06em;
+}
+.nav-cta-label{font-size:.62rem}
+.nav-cta-arrow{font-size:.9rem}
+.portrait-placeholder.social-profile-card{
+  aspect-ratio:.96;
+  min-height:0;
+  justify-content:space-between;
+  gap:20px;
+  padding:clamp(24px,3vw,34px);
+  border-radius:24px;
+  background:
+    radial-gradient(ellipse at 82% 18%,rgba(56,189,248,.26),transparent 42%),
+    linear-gradient(145deg,#283b59,#111b2d 76%);
+}
+.portrait-placeholder.social-profile-card::before{display:none}
+.profile-card-top,.profile-card-bottom{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.profile-monogram{
+  display:grid;
+  place-items:center;
+  width:58px;
+  aspect-ratio:1;
+  border:1px solid rgba(125,211,252,.45);
+  border-radius:16px;
+  background:rgba(9,20,36,.42);
+  color:#fff;
+  font:800 1rem var(--head);
+  letter-spacing:.08em;
+}
+.profile-location{text-align:right;color:var(--cy2);font:500 .62rem/1.65 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.portrait-placeholder.social-profile-card .profile-monogram{font:800 1rem var(--head);letter-spacing:.08em;text-transform:none;color:#fff}
+.portrait-placeholder.social-profile-card .profile-location{font:500 .62rem/1.65 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cy2)}
+.profile-card-copy{position:relative}
+.profile-card-copy>span{color:var(--cy2);font:500 .65rem var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.profile-card-copy h2{margin-top:12px;font:800 clamp(1.7rem,3vw,2.4rem)/1.08 var(--head);letter-spacing:-.035em}
+.profile-card-copy p{margin-top:12px;color:var(--body);font-size:.82rem}
+.profile-card-bottom{justify-content:flex-start;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line2);color:var(--body);font:500 .58rem var(--mono);letter-spacing:.07em;text-transform:uppercase}
+.visual-caption{flex-wrap:wrap;justify-content:flex-start;gap:8px 12px}
+.visual-caption b{font-size:.82rem}
+.home-social-actions{justify-content:center;margin-top:24px}
+.home-social-actions .btn{min-height:50px}
+.footer-inner nav a[href*="linkedin.com"]{color:var(--cy2)}
+.footer-inner nav a[href*="linkedin.com"]:hover{color:#fff}
+
+@media(max-width:1180px){
+  .nav .nav-cta{
+    display:inline-flex;
+    width:42px;
+    min-width:42px;
+    height:42px;
+    padding:0;
+    flex:none;
+    justify-content:center;
+    gap:0;
+    border-radius:50%;
+    font-size:0;
+  }
+  .nav-cta-label,.nav-cta-arrow{display:none}
+}
+@media(max-width:800px){
+  .portrait-placeholder.social-profile-card{aspect-ratio:1.2}
+}
+@media(max-width:560px){
+  .home-social-actions{display:grid;grid-template-columns:1fr;width:100%;max-width:380px;margin:22px auto 0}
+  .home-social-actions .btn{width:100%;justify-content:center}
+  .portrait-placeholder.social-profile-card{padding:22px;border-radius:20px}
+  .profile-card-copy h2{font-size:clamp(1.65rem,7.5vw,2.2rem)}
+  .profile-card-bottom{font-size:.55rem}
+}
+@media(max-width:380px){
+  .nav .nav-cta{width:38px;min-width:38px;height:38px}
+  .profile-card-top{gap:10px}
+}
