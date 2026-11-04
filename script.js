@@ -18,15 +18,27 @@ chips.forEach(chip => {
   });
 });
 
-// Market analysis category filter (ready for posts)
-const cats = document.querySelectorAll('.filters .chip[data-cat]');
-const posts = document.querySelectorAll('.post[data-cat]');
-cats.forEach(chip => {
-  chip.addEventListener('click', () => {
-    cats.forEach(c => c.classList.remove('on'));
-    chip.classList.add('on');
-    const f = chip.dataset.cat;
-    posts.forEach(p => { p.style.display = (f === 'all' || p.dataset.cat === f) ? '' : 'none'; });
+// Main-page discovery carousel
+const heroTabs = [...document.querySelectorAll('[data-hero-tab]')];
+const heroSlides = [...document.querySelectorAll('[data-hero-slide]')];
+function showHeroSlide(index, moveFocus = false) {
+  heroSlides.forEach((slide, slideIndex) => { slide.hidden = slideIndex !== index; });
+  heroTabs.forEach((tab, tabIndex) => {
+    const selected = tabIndex === index;
+    tab.setAttribute('aria-selected', String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+  });
+  if (moveFocus) heroTabs[index].focus();
+}
+heroTabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => showHeroSlide(index));
+  tab.addEventListener('keydown', event => {
+    const direction = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+    const target = event.key === 'Home' ? 0 : event.key === 'End' ? heroTabs.length - 1 : (index + direction + heroTabs.length) % heroTabs.length;
+    if (direction || event.key === 'Home' || event.key === 'End') {
+      event.preventDefault();
+      showHeroSlide(target, true);
+    }
   });
 });
 

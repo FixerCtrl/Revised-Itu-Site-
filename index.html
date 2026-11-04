@@ -20,61 +20,83 @@
     </a>
     <button class="menu-btn" aria-label="Menu">Menu</button>
     <nav class="links">
-      <a class="active" href="#top">Overview</a>
-      <a href="#trajectory">Trajectory</a>
-      <a href="#case-studies">Case Studies</a>
-      <a href="#market-analysis">Market Analysis</a>
+      <a class="active" href="#case-studies">Work</a>
+      <a href="#profile">About</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="btn primary nav-cta" href="#contact">Book a call ↗</a>
+    <a class="btn primary nav-cta" href="#contact">Book an intro</a>
   </div>
 </header>
 
 <main>
 <section class="hero" id="top">
   <div class="wrap">
-    <div class="kicker"><i class="dot"></i>Chemical Engineering <b>×</b> Corporate Finance</div>
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <h1>Bridging Molecular <span class="cy">Execution</span> and <span class="outline">Corporate</span> Strategy.</h1>
-        <p class="lead">I'm Itumeleng D. Kgongwane — a Lead Engineer at Sappi R&amp;D with an MS Finance (Fordham) and an MBA (GIBS). For two decades I've turned process breakthroughs into EBITDA, NPV and market share.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="#case-studies">View case studies ↗</a>
-          <a class="btn ghost" href="#contact">Schedule advisory call</a>
-        </div>
-        <a class="hero-social" href="https://www.linkedin.com/in/itumelengidk/" target="_blank" rel="noopener noreferrer" aria-label="Connect with Itumeleng on LinkedIn">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8.5V19M5 5.2v.1M10 19v-6.2c0-2 1.2-3.1 3-3.1s3 1.1 3 3.1V19M10 10v9M3 3h18v18H3z"/></svg>
-          <span>Connect with Itumeleng on LinkedIn</span><b aria-hidden="true">↗</b>
-        </a>
+    <div class="hero-carousel" aria-label="Explore Itumeleng's profile, results, and advisory work">
+      <div class="hero-slides" aria-live="polite">
+        <article class="hero-slide" id="hero-profile" role="tabpanel" aria-labelledby="hero-tab-profile" data-hero-slide>
+          <div class="hero-copy">
+            <div class="kicker"><i class="dot"></i>Profile · 01</div>
+            <h1>Engineering insight. <span class="cy">Investment-ready</span> decisions.</h1>
+            <p class="lead">I'm Itumeleng D. Kgongwane, a chemical engineer with an MS in Finance and an MBA. I help connect technical work to clear business decisions.</p>
+            <div class="btn-row">
+              <a class="btn primary" href="#profile">Meet Itumeleng</a>
+              <a class="btn ghost" href="#case-studies">Explore results</a>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="hero-photo photo-placeholder" role="img" aria-label="Placeholder for Itumeleng's professional portrait"><span>Add a current professional portrait</span></div>
+            <p class="hero-caption">Pretoria, South Africa · MS Finance · MBA · Chemical Engineering</p>
+            <a class="hero-social" href="https://www.linkedin.com/in/itumelengidk/" target="_blank" rel="noopener noreferrer" aria-label="Connect with Itumeleng on LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8.5V19M5 5.2v.1M10 19v-6.2c0-2 1.2-3.1 3-3.1s3 1.1 3 3.1V19M10 10v9M3 3h18v18H3z"/></svg>
+              <span>Connect on LinkedIn</span><b aria-hidden="true">↗</b>
+            </a>
+          </div>
+        </article>
+
+        <article class="hero-slide" id="hero-results" role="tabpanel" aria-labelledby="hero-tab-results" data-hero-slide hidden>
+          <div class="hero-copy">
+            <div class="kicker"><i class="dot"></i>Selected results · 02</div>
+            <h2>Real projects. <span class="cy">Measurable outcomes.</span></h2>
+            <p class="lead">From product launches to mill-scale improvements, see how technical challenges were translated into business results.</p>
+            <div class="btn-row"><a class="btn primary" href="#case-studies">Browse case studies</a></div>
+          </div>
+          <div class="hero-visual results-visual">
+            <div class="result-feature"><span>Packaging · EBITDA, first two years</span><b>R87M</b></div>
+            <div class="result-pair">
+              <div><span>MFC scale-up · 15-year NPV</span><b>R203M</b></div>
+              <div><span>Annual EBITDA</span><b>R24M</b></div>
+            </div>
+            <p class="hero-caption">Selected historical project outcomes. Results are context-specific, not guarantees of future performance.</p>
+          </div>
+        </article>
+
+        <article class="hero-slide" id="hero-advisory" role="tabpanel" aria-labelledby="hero-tab-advisory" data-hero-slide hidden>
+          <div class="hero-copy">
+            <div class="kicker"><i class="dot"></i>Advisory · 03</div>
+            <h2>Technical insight, <span class="cy">made actionable.</span></h2>
+            <p class="lead">Independent support for investment, product, and operational decisions where engineering and finance meet.</p>
+            <div class="btn-row">
+              <a class="btn primary" href="#contact">Book an intro</a>
+              <a class="btn ghost" href="tel:+27829730324">Call Itumeleng</a>
+            </div>
+          </div>
+          <div class="hero-visual advisory-visual">
+            <h3>How I can help</h3>
+            <a href="#contact"><span>01</span> Technical due diligence</a>
+            <a href="#contact"><span>02</span> R&amp;D commercialisation</a>
+            <a href="#contact"><span>03</span> Process and cost optimisation</a>
+            <a href="#contact"><span>04</span> Sustainability strategy</a>
+          </div>
+        </article>
       </div>
-      <div class="hero-stats">
-        <div class="stat big">
-          <div class="slabel"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>Sustainable packaging</div>
-          <div class="num">R87M</div>
-          <p>EBITDA in the first two years after launch — market share from 0 to 16% in year one.</p>
-          <div class="bars"><div><i style="height:67px"></i><span>Y1</span></div><div><i style="height:95px"></i><span>Y2</span></div></div>
-        </div>
-        <div class="stat">
-          <div class="slabel"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg>MFC scale-up</div>
-          <div class="num">R203M</div>
-          <p>15-year NPV · +R24M EBITDA a year</p>
-        </div>
-        <div class="stat">
-          <div class="slabel"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg>Fordham MS Fin</div>
-          <div class="num">3.94</div>
-          <p>GPA, Summa Cum Laude · MBA · BSc Chem Eng</p>
-        </div>
+      <div class="hero-controls" role="tablist" aria-label="Choose what to explore">
+        <button id="hero-tab-profile" class="hero-tab" type="button" role="tab" aria-controls="hero-profile" aria-selected="true" tabindex="0" data-hero-tab>Profile</button>
+        <button id="hero-tab-results" class="hero-tab" type="button" role="tab" aria-controls="hero-results" aria-selected="false" tabindex="-1" data-hero-tab>Results</button>
+        <button id="hero-tab-advisory" class="hero-tab" type="button" role="tab" aria-controls="hero-advisory" aria-selected="false" tabindex="-1" data-hero-tab>Advisory</button>
       </div>
     </div>
   </div>
 </section>
-
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Molecular Execution</span><span>Corporate Strategy</span><span>Capital Allocation</span><span>R&amp;D Commercialisation</span><span>Process Optimisation</span><span>Equity Analysis</span><span>Sustainability Strategy</span><span>Agentic AI</span>
-    <span>Molecular Execution</span><span>Corporate Strategy</span><span>Capital Allocation</span><span>R&amp;D Commercialisation</span><span>Process Optimisation</span><span>Equity Analysis</span><span>Sustainability Strategy</span><span>Agentic AI</span>
-  </div>
-</div>
 
 <section id="profile">
   <div class="wrap profile-grid">
@@ -86,6 +108,7 @@
         <span class="badge">Institute of Directors SA · Member</span>
         <span class="badge">Sappi Global Sustainability Task Force</span>
       </div>
+      <a class="career-link" href="#trajectory">View career history ↓</a>
     </div>
     <div class="awards">
       <div class="award"><div class="yr">2022</div><h4>Sappi Global Gold Technical Innovation Award</h4><p>Graz, Austria · 9 May 2022</p></div>
@@ -95,10 +118,6 @@
     </div>
   </div>
   <div class="wrap proof-gallery" aria-label="Professional photos and project evidence">
-    <figure class="photo-slot portrait-slot">
-      <div class="photo-placeholder" role="img" aria-label="Placeholder for a current professional portrait"><span>Portrait photo</span></div>
-      <figcaption>Itumeleng · Professional portrait</figcaption>
-    </figure>
     <figure class="photo-slot">
       <div class="photo-placeholder" role="img" aria-label="Placeholder for a genuine photo from a mill or research environment"><span>Mill or research photo</span></div>
       <figcaption>On site · Research or mill environment</figcaption>
@@ -112,9 +131,11 @@
 
 <section id="trajectory">
   <div class="wrap">
-    <div class="eyebrow">02 · Trajectory</div>
+    <div class="eyebrow">Career history</div>
+    <details class="career-details">
+      <summary>View full career history <span>11 roles and milestones</span></summary>
     <div class="section-head">
-      <h2>Two tracks. One through-line: value creation.</h2>
+      <h2>A career across engineering and finance.</h2>
       <div class="filters">
         <button class="chip on" data-filter="all">All milestones</button>
         <button class="chip" data-filter="eng">Engineering &amp; R&amp;D</button>
@@ -215,6 +236,7 @@
         <div class="tags"><span class="tag">BSc Chem Eng</span></div>
       </article>
     </div>
+    </details>
   </div>
 </section>
 
@@ -311,43 +333,6 @@
   </div>
 </section>
 
-<section id="market-analysis" style="background:rgba(10,18,32,.35)">
-  <div class="wrap">
-    <div class="eyebrow">Notes from the desk</div>
-    <h2 class="big-title">Market Analysis <em>&amp; Commentary</em></h2>
-    <p class="lead" style="margin-top:20px">Equities, macro and commodities — read through the lens of someone who has run the plant and built the business case.</p>
-    <div class="btn-row">
-      <a class="btn primary" href="https://www.linkedin.com/in/itumelengidk/" target="_blank" rel="noopener">Follow on LinkedIn ↗</a>
-    </div>
-    <div class="photo-cap">Charging Bull · Lower Manhattan</div>
-
-    <div class="filters" style="margin-top:34px">
-      <button class="chip on" data-cat="all">All</button>
-      <button class="chip" data-cat="equities">Equities &amp; Valuation</button>
-      <button class="chip" data-cat="macro">Macro &amp; Commodities</button>
-      <button class="chip" data-cat="fixed">Fixed Income &amp; FX</button>
-      <button class="chip" data-cat="industrials">Industrials &amp; Materials</button>
-      <button class="chip" data-cat="strategy">Strategy &amp; Leadership</button>
-      <button class="chip" data-cat="fintech">Fintech &amp; AI</button>
-      <button class="chip" data-cat="esg">Sustainability &amp; ESG</button>
-    </div>
-
-    <div class="posts">
-      <!-- To add a commentary, copy the block below, set data-cat to one of:
-           equities, macro, fixed, industrials, strategy, fintech, esg
-      <article class="post" data-cat="equities">
-        <div class="cat">Equities &amp; Valuation</div>
-        <h3>Post title</h3>
-        <p>Short summary of the commentary.</p>
-        <div class="date">2 November 2026</div>
-      </article>
-      -->
-    </div>
-
-    <div class="empty">Commentary is temporarily unavailable.</div>
-  </div>
-</section>
-
 <section id="contact">
   <div class="wrap contact-grid">
     <div>
@@ -431,7 +416,7 @@
     </div>
     <div class="bottom">
       <span>© 2026 Itumeleng D. Kgongwane</span>
-      <nav><a href="#market-analysis">Market Analysis</a><a href="#contact">Contact</a></nav>
+      <nav><a href="#case-studies">Work</a><a href="#profile">About</a><a href="#contact">Contact</a></nav>
     </div>
   </div>
 </footer>
