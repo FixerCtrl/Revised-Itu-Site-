@@ -4,8 +4,8 @@
   --text:#ffffff;--body:#c3ccdb;--muted:#8f9bb0;
   --cy:#38bdf8;--cy2:#7dd3fc;--cyd:#0b4f6c;
   --max:1660px;
-  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
-  --head:'Archivo','Inter',system-ui,sans-serif;
+  --mono:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --head:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -1192,4 +1192,173 @@ footer{padding-top:40px;padding-bottom:30px}
   .featured-carousel .featured-action,
   .featured-carousel .carousel-arrow,
   .featured-carousel .carousel-toggle{transition:none}
+}
+
+/* Clear, LinkedIn-inspired typography and scan-friendly information hierarchy */
+:root{
+  --body:#d0d8e5;
+  --muted:#aab7ca;
+}
+body{
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;
+  font-weight:400;
+  line-height:1.65;
+  color:#f4f7fb;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-weight:650;
+  line-height:1.16;
+  letter-spacing:-.025em;
+}
+p{line-height:1.68}
+.lead{font-size:clamp(1.05rem,1.35vw,1.18rem);line-height:1.7;color:#d2dbe8}
+.eyebrow,.kicker{
+  font-family:inherit;
+  font-size:.8rem;
+  font-weight:600;
+  letter-spacing:.025em;
+  line-height:1.45;
+  text-transform:none;
+}
+.brand b,.nav .brand b{font-family:inherit;font-weight:650;letter-spacing:.015em}
+.brand small,.nav .brand small{
+  font-family:inherit;
+  font-size:.72rem;
+  letter-spacing:.01em;
+  text-transform:none;
+}
+.nav .links,nav.links{
+  font-family:inherit;
+  font-size:.82rem;
+  font-weight:500;
+  letter-spacing:0;
+  text-transform:none;
+}
+.nav .links{gap:clamp(10px,1.15vw,18px)}
+.nav .links a{padding:8px 0}
+.menu-btn,.btn{
+  font-family:inherit;
+  font-size:.88rem;
+  font-weight:600;
+  letter-spacing:0;
+  text-transform:none;
+}
+.nav .nav-cta{font-size:.82rem}
+.nav-cta-label{font-size:.82rem}
+.footer-inner nav a{
+  font-family:inherit;
+  font-size:.78rem;
+  font-weight:500;
+  letter-spacing:0;
+  text-transform:none;
+}
+:is(.hero-caption,.visual-caption,.quick-credentials span,.path-number,.path-label,.card-link,
+    .home-metrics span,.case-detail-top span,.case-meta b,.case-story h4,.case-tags span,
+    .case .id,.case .sector,.case h5,.tag,.badge,.career-details summary span,
+    .tl .meta,.service-card>span,.service-card dt,.credential-grid article>span,
+    .topic-grid article>span,.award-org,.award-art small,.contact-detail span,
+    .contact-location,.copyright,.carousel-art .art-label,.carousel-art .art-mark,
+    .featured-carousel-count){
+  font-family:inherit;
+  letter-spacing:.015em;
+  text-transform:none;
+}
+.quick-credentials span,.home-metrics span,.case-meta b,.case-story h4,.case-tags span,
+.case .id,.case h5,.tag,.badge,.service-card dt,.credential-grid article>span,
+.topic-grid article>span,.award-org,.contact-detail span,.contact-location{
+  font-size:.76rem;
+  line-height:1.5;
+}
+.home-intro .hero-overline{
+  font-family:inherit;
+  font-size:.84rem;
+  font-weight:600;
+  letter-spacing:.025em;
+  text-transform:none;
+}
+.home-context{font-size:.9rem;line-height:1.65}
+.contact-detail b,.path-card p,.service-card>p,.credential-grid p,.topic-grid p,
+.case-story p,.award-detail p,.contact-aside>p,.small-note{
+  font-size:.94rem;
+  line-height:1.65;
+}
+.page-facts b{
+  font-family:inherit;
+  font-size:.76rem;
+  font-weight:600;
+  letter-spacing:.02em;
+  text-transform:none;
+}
+.page-facts span{font-size:.9rem;line-height:1.55}
+.page-facts{
+  gap:10px 20px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+.page-facts span{
+  flex:1 1 190px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:none;
+  font-size:.86rem;
+  line-height:1.55;
+}
+.page-facts b{display:inline;margin:0 5px 0 0;color:var(--cy2)}
+.carousel-copy .eyebrow,.featured-carousel .carousel-copy .eyebrow{
+  font-family:inherit;
+  font-size:.84rem;
+  font-weight:600;
+  letter-spacing:.025em;
+  text-transform:none;
+}
+.featured-carousel .carousel-copy h3{
+  font-weight:700;
+  line-height:1.1;
+  letter-spacing:-.035em;
+}
+.featured-carousel .carousel-copy p{font-size:1rem;line-height:1.62}
+.featured-carousel .featured-action{
+  font-family:inherit;
+  font-size:.9rem;
+  font-weight:600;
+}
+.carousel-cta,.text-link,.social-link{
+  font-family:inherit;
+  font-size:.88rem;
+  font-weight:600;
+  letter-spacing:0;
+  text-transform:none;
+}
+.search-card .eyebrow{font-size:.82rem}
+.site-search-control button{
+  font-family:inherit;
+  font-size:.82rem;
+  font-weight:600;
+  letter-spacing:0;
+  text-transform:none;
+}
+.home-metrics strong{font-weight:700}
+.path-card h3,.service-card h3,.credential-grid h3,.topic-grid h3{font-weight:650;line-height:1.22}
+.path-card{min-height:250px}
+.career-timeline .tl .meta{font-size:.8rem;letter-spacing:.015em}
+.search-page-results li span{font-family:inherit;font-size:.78rem;letter-spacing:0;text-transform:none}
+.search-result-count{font-family:inherit;font-size:.82rem;letter-spacing:0}
+.site-search-results a>span{font-family:inherit;font-size:.76rem;letter-spacing:0;text-transform:none}
+.site-search-results strong{font-family:inherit}
+
+@media(max-width:1180px){
+  .nav .links{gap:4px}
+  .nav .links a{font-size:.9rem}
+}
+@media(max-width:560px){
+  body{font-size:15px}
+  .home-intro .hero-overline{font-size:.78rem}
+  .quick-credentials span,.home-metrics span{font-size:.7rem}
+  .footer-inner nav a{font-size:.8rem}
+  .featured-carousel .carousel-copy p{font-size:.94rem}
+  .page-facts{display:flex}
+  .page-facts span{flex-basis:100%}
 }
