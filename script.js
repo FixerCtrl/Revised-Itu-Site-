@@ -42,6 +42,118 @@ heroTabs.forEach((tab, index) => {
   });
 });
 
+// Shared accessible content carousels
+document.querySelectorAll('[data-carousel]').forEach(carousel => {
+  const slides = [...carousel.querySelectorAll('[data-carousel-slide]')];
+  const pagination = carousel.querySelector('[data-carousel-pagination]');
+  const status = carousel.querySelector('[data-carousel-status]');
+  const previous = carousel.querySelector('[data-carousel-prev]');
+  const next = carousel.querySelector('[data-carousel-next]');
+  const toggle = carousel.querySelector('[data-carousel-toggle]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!slides.length || !pagination || !status || !previous || !next || !toggle) return;
+  carousel.tabIndex = 0;
+
+  let activeIndex = 0;
+  let timer;
+  let pointerStart;
+  let isPlaying = !reducedMotion.matches;
+  const dots = slides.map((slide, index) => {
+    const dot = document.createElement('button');
+    dot.className = 'carousel-dot';
+    dot.type = 'button';
+    dot.setAttribute('aria-label', `Show slide ${index + 1} of ${slides.length}`);
+    dot.addEventListener('click', () => showSlide(index));
+    pagination.append(dot);
+    return dot;
+  });
+
+  function updateCarousel() {
+    slides.forEach((slide, index) => {
+      slide.hidden = index !== activeIndex;
+      slide.setAttribute('aria-label', `Slide ${index + 1} of ${slides.length}`);
+    });
+    dots.forEach((dot, index) => dot.setAttribute('aria-current', String(index === activeIndex)));
+    status.textContent = `Slide ${activeIndex + 1} of ${slides.length}`;
+  }
+
+  function showSlide(index) {
+    activeIndex = (index + slides.length) % slides.length;
+    updateCarousel();
+    resetTimer();
+  }
+
+  function stopTimer() {
+    window.clearInterval(timer);
+    timer = undefined;
+  }
+
+  function startTimer() {
+    stopTimer();
+    if (!isPlaying || reducedMotion.matches || slides.length < 2) return;
+    timer = window.setInterval(() => {
+      activeIndex = (activeIndex + 1) % slides.length;
+      updateCarousel();
+    }, 6000);
+  }
+
+  function resetTimer() {
+    startTimer();
+  }
+
+  function setPlaying(playing) {
+    if (reducedMotion.matches && playing) {
+      toggle.disabled = true;
+      toggle.textContent = 'Play';
+      toggle.setAttribute('aria-label', 'Autoplay unavailable while reduced motion is enabled');
+      toggle.setAttribute('aria-pressed', 'false');
+      isPlaying = false;
+      stopTimer();
+      return;
+    }
+    isPlaying = playing;
+    toggle.disabled = reducedMotion.matches;
+    toggle.textContent = playing ? 'Pause' : 'Play';
+    toggle.setAttribute('aria-label', reducedMotion.matches ? 'Autoplay unavailable while reduced motion is enabled' : `${playing ? 'Pause' : 'Play'} carousel`);
+    toggle.setAttribute('aria-pressed', String(playing));
+    startTimer();
+  }
+
+  previous.addEventListener('click', () => showSlide(activeIndex - 1));
+  next.addEventListener('click', () => showSlide(activeIndex + 1));
+  toggle.addEventListener('click', () => setPlaying(!isPlaying));
+  carousel.addEventListener('mouseenter', () => setPlaying(false));
+  carousel.addEventListener('focusin', () => setPlaying(false));
+  carousel.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch') {
+      setPlaying(false);
+      pointerStart = { x: event.clientX, y: event.clientY };
+    }
+  }, { passive: true });
+  carousel.addEventListener('pointerup', event => {
+    if (!pointerStart || event.pointerType !== 'touch') return;
+    const deltaX = event.clientX - pointerStart.x;
+    const deltaY = event.clientY - pointerStart.y;
+    pointerStart = undefined;
+    if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY)) {
+      showSlide(activeIndex + (deltaX < 0 ? 1 : -1));
+    }
+  }, { passive: true });
+  carousel.addEventListener('pointercancel', () => { pointerStart = undefined; }, { passive: true });
+  carousel.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+      event.preventDefault();
+      showSlide(activeIndex + (event.key === 'ArrowRight' ? 1 : -1));
+    }
+  });
+  reducedMotion.addEventListener('change', () => {
+    setPlaying(false);
+  });
+
+  updateCarousel();
+  setPlaying(isPlaying);
+});
+
 // Consultation form: opens the visitor's email app with the details filled in
 const form = document.getElementById('book-form');
 if (form) {
