@@ -1,21 +1,25 @@
-# Revised-Itu-Site-
+# Itumeleng D. Kgongwane — Portfolio Site
 
-## Carousel handover
+Static, responsive multi-page portfolio built with HTML, CSS and JavaScript.
 
-The homepage uses static HTML, CSS and JavaScript. Main sections can be reached from the expanded navigation or the home-page search, which links directly to matching case studies and career entries. The shared content carousels support looping navigation, touch swipes, arrow keys, pause/play, and reduced-motion preferences.
+## Pages
 
-Carousel and page content is authored in `index.html`. This repository has no CMS, admin interface, scheduling service, post feed, individual case-study, Insights or Journal pages, or photograph files. Slide editing, scheduling, automatic post population, related-content carousels, and actual owner/project photographs require supplied assets and/or a CMS/backend; these are not available in this static implementation. Only existing site graphics are used; no stock or external photos are added.
+- `index.html` — introduction and previews that route visitors to the dedicated pages.
+- `about.html` — owner profile and professional perspective.
+- `expertise.html` — advisory services and who/what/how/why context.
+- `work.html` — six case studies with project context and outcomes.
+- `career.html` — education and career timeline with filters.
+- `awards.html` — awards and recognition.
+- `insights.html` — publication space and testimonial handover.
+- `contact.html` — contact details and email-based enquiry form.
+- `search.html` — site-wide search across pages, projects, roles and awards.
 
-### Replace these graphic placeholders with approved real assets
+## Content and assets
 
-- [ ] Sappi Global Gold ceremony in Graz (2022).
-- [ ] Sustainable packaging mill or product image.
-- [ ] Stanger Mill or MFC pilot plant image.
-- [ ] Fordham Gabelli / Midtown New York image.
-- [ ] GIBS Responsible Leadership presentation image.
-- [ ] Latest Insights post image and its published post URL.
-- [ ] Journal/gallery image and approved reflection quote with its post URL.
-- [ ] Award photographs, where available.
-- [ ] Approved testimonial quotes, names, roles, companies, and optional photos.
+All provided career and project information is kept in the relevant page. The site source contains no real photographs; the portrait, project and award visuals are CSS graphics/placeholders. No generic stock or external photos are used. Replace the placeholders only with approved owner, project, mill, study and award images.
 
-No stock photos or invented testimonials are used. Until the real posts and URLs are supplied, the Insights and Journal items point to the existing contact section; testimonials are clearly marked placeholders.
+The contact form prepares an email in the visitor's email application; this static site does not store submissions. Insights, Journal entries and testimonials remain unpublished until real content and approved attributions are supplied. There is no CMS or admin interface.
+
+## Validation
+
+Check JavaScript syntax with `node --check script.js` and `node --check search.js`. Check local HTML navigation and anchors whenever pages or links change.
