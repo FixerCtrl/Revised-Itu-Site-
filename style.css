@@ -950,3 +950,38 @@ footer{padding-top:40px;padding-bottom:30px}
   .nav .nav-cta{width:38px;min-width:38px;height:38px}
   .profile-card-top{gap:10px}
 }
+
+/* Homepage feature carousel sits directly below the navigation */
+.featured-carousel{
+  padding:clamp(28px,4vw,48px) 0 30px;
+  border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(ellipse at 82% 10%,rgba(56,189,248,.09),transparent 42%),
+    rgba(10,18,32,.32);
+}
+.featured-carousel .carousel-stage{min-height:clamp(300px,34vw,420px)}
+.featured-carousel .carousel-slide{min-height:clamp(300px,34vw,420px);padding:0}
+.featured-carousel .carousel-art{min-height:clamp(260px,32vw,390px);border-radius:20px}
+.featured-carousel .carousel-copy h3{max-width:560px}
+.featured-carousel .carousel-toolbar{padding:14px 0 0}
+.featured-carousel .featured-carousel-count{
+  color:var(--muted);
+  font:500 .68rem var(--mono);
+  letter-spacing:.1em;
+  text-align:right;
+}
+.featured-carousel .featured-carousel-count span{color:var(--cy2)}
+.featured-carousel .carousel-hint{margin-bottom:0}
+.featured-carousel:focus-visible{outline:2px solid var(--cy);outline-offset:-4px}
+@media(max-width:760px){
+  .featured-carousel{padding:24px 0 20px}
+  .featured-carousel .carousel-stage,.featured-carousel .carousel-slide{min-height:0}
+  .featured-carousel .carousel-art{min-height:0}
+  .featured-carousel .carousel-toolbar{grid-template-columns:auto 1fr auto}
+}
+@media(max-width:420px){
+  .featured-carousel .carousel-toolbar{gap:7px}
+  .featured-carousel .carousel-controls{gap:6px}
+  .featured-carousel .featured-carousel-count{font-size:.59rem}
+  .featured-carousel .carousel-hint{font-size:.58rem}
+}

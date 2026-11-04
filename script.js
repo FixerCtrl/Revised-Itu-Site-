@@ -64,3 +64,51 @@ if (consultationForm) {
     window.location.href = `mailto:kgongwane@icloud.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 }
+
+// Featured homepage carousel
+const featuredCarousel = document.querySelector('.featured-carousel');
+if (featuredCarousel) {
+  const slides = [...featuredCarousel.querySelectorAll('.carousel-slide')];
+  const dots = [...featuredCarousel.querySelectorAll('[data-carousel-dot]')];
+  const counter = featuredCarousel.querySelector('[data-carousel-count]');
+  let activeIndex = slides.findIndex(slide => !slide.hidden);
+  let pointerStartX = null;
+
+  const showSlide = index => {
+    activeIndex = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      const active = slideIndex === activeIndex;
+      slide.hidden = !active;
+      slide.setAttribute('aria-label', `${slideIndex + 1} of ${slides.length}`);
+      dots[slideIndex].setAttribute('aria-current', String(active));
+    });
+    if (counter) counter.textContent = String(activeIndex + 1).padStart(2, '0');
+  };
+
+  featuredCarousel.querySelector('[data-carousel-prev]')?.addEventListener('click', () => showSlide(activeIndex - 1));
+  featuredCarousel.querySelector('[data-carousel-next]')?.addEventListener('click', () => showSlide(activeIndex + 1));
+  dots.forEach((dot, index) => dot.addEventListener('click', () => showSlide(index)));
+
+  featuredCarousel.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      showSlide(activeIndex - 1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      showSlide(activeIndex + 1);
+    }
+  });
+
+  featuredCarousel.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch') pointerStartX = event.clientX;
+  });
+  featuredCarousel.addEventListener('pointerup', event => {
+    if (pointerStartX === null) return;
+    const distance = event.clientX - pointerStartX;
+    pointerStartX = null;
+    if (Math.abs(distance) >= 50) showSlide(activeIndex + (distance < 0 ? 1 : -1));
+  });
+  featuredCarousel.addEventListener('pointercancel', () => {
+    pointerStartX = null;
+  });
+}
