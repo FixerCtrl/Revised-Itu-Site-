@@ -2,8 +2,112 @@
 const btn = document.querySelector('.menu-btn');
 const links = document.querySelector('nav.links');
 if (btn && links) {
-  btn.addEventListener('click', () => links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', 'main-navigation');
+  links.id = 'main-navigation';
+  btn.setAttribute('aria-label', 'Open menu');
+  btn.addEventListener('click', () => {
+    const isOpen = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(isOpen));
+    btn.setAttribute('aria-label', `${isOpen ? 'Close' : 'Open'} menu`);
+    btn.textContent = isOpen ? 'Close' : 'Menu';
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    links.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', 'Open menu');
+    btn.textContent = 'Menu';
+  }));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && links.classList.contains('open')) {
+      links.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'Open menu');
+      btn.textContent = 'Menu';
+      btn.focus();
+    }
+  });
+}
+
+// Search authored page content and link directly to matching sections or entries.
+const searchForm = document.querySelector('.site-search');
+if (searchForm) {
+  const searchInput = searchForm.querySelector('input[type="search"]');
+  const resultsPanel = document.querySelector('#site-search-results');
+  const resultCount = resultsPanel.querySelector('.search-result-count');
+  const resultList = resultsPanel.querySelector('ul');
+  const searchableItems = [...document.querySelectorAll('#profile, #expertise, #awards, #latest-desk, #testimonials, #contact, .tl, .case')];
+  const normalize = value => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\p{L}\p{N}%]+/gu, ' ').trim();
+  const searchIndex = searchableItems.map(item => {
+    const heading = item.querySelector('h1,h2,h3,h4,blockquote');
+    const title = heading?.textContent.trim() || 'More information';
+    const parentSection = item.closest('section');
+    const category = item.classList.contains('case') ? 'Case study'
+      : item.classList.contains('tl') ? 'Career'
+        : item.id === 'profile' ? 'About'
+          : item.id === 'expertise' ? 'Expertise'
+            : item.id === 'awards' ? 'Awards'
+              : item.id === 'latest-desk' ? 'Insights & journal'
+                : item.id === 'testimonials' ? 'Testimonials'
+                  : item.id === 'contact' ? 'Contact' : 'About';
+    const target = item.matches('.carousel-slide') ? parentSection : item;
+    return {
+      title,
+      category,
+      target,
+      text: normalize(`${title} ${item.textContent}`)
+    };
+  });
+
+  function renderSearchResults() {
+    const query = normalize(searchInput.value);
+    resultList.replaceChildren();
+    if (!query) {
+      resultsPanel.hidden = true;
+      return;
+    }
+    const terms = query.split(/\s+/);
+    const matches = searchIndex.filter(entry => terms.every(term => entry.text.includes(term))).slice(0, 10);
+    resultsPanel.hidden = false;
+    resultCount.textContent = matches.length
+      ? `${matches.length} ${matches.length === 1 ? 'match' : 'matches'}${matches.length === 10 ? ' · showing first 10' : ''}`
+      : 'No matches. Try a broader term such as “finance”, “engineering” or “award”.';
+    matches.forEach(entry => {
+      const item = document.createElement('li');
+      const link = document.createElement('a');
+      const title = document.createElement('strong');
+      const category = document.createElement('span');
+      const summary = document.createElement('p');
+      title.textContent = entry.title;
+      category.textContent = entry.category;
+      summary.textContent = entry.target.querySelector('p')?.textContent.trim().slice(0, 150) || 'Explore this part of the site.';
+      link.href = `#${entry.target.id}`;
+      link.append(title, category, summary);
+      item.append(link);
+      resultList.append(item);
+    });
+  }
+
+  searchForm.addEventListener('submit', event => {
+    event.preventDefault();
+    renderSearchResults();
+    if (resultList.querySelector('a')) resultList.querySelector('a').focus();
+    else resultCount.focus?.();
+  });
+  searchInput.addEventListener('input', renderSearchResults);
+  searchInput.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      searchInput.value = '';
+      resultsPanel.hidden = true;
+    }
+  });
+  resultList.addEventListener('click', event => {
+    const link = event.target.closest('a');
+    if (!link) return;
+    const target = document.querySelector(link.getAttribute('href'));
+    target?.closest('details')?.setAttribute('open', '');
+    resultsPanel.hidden = true;
+  });
 }
 
 // Timeline filter (home page)
@@ -15,30 +119,6 @@ chips.forEach(chip => {
     chip.classList.add('on');
     const f = chip.dataset.filter;
     items.forEach(it => it.classList.toggle('hide', f !== 'all' && it.dataset.track !== f));
-  });
-});
-
-// Main-page discovery carousel
-const heroTabs = [...document.querySelectorAll('[data-hero-tab]')];
-const heroSlides = [...document.querySelectorAll('[data-hero-slide]')];
-function showHeroSlide(index, moveFocus = false) {
-  heroSlides.forEach((slide, slideIndex) => { slide.hidden = slideIndex !== index; });
-  heroTabs.forEach((tab, tabIndex) => {
-    const selected = tabIndex === index;
-    tab.setAttribute('aria-selected', String(selected));
-    tab.tabIndex = selected ? 0 : -1;
-  });
-  if (moveFocus) heroTabs[index].focus();
-}
-heroTabs.forEach((tab, index) => {
-  tab.addEventListener('click', () => showHeroSlide(index));
-  tab.addEventListener('keydown', event => {
-    const direction = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
-    const target = event.key === 'Home' ? 0 : event.key === 'End' ? heroTabs.length - 1 : (index + direction + heroTabs.length) % heroTabs.length;
-    if (direction || event.key === 'Home' || event.key === 'End') {
-      event.preventDefault();
-      showHeroSlide(target, true);
-    }
   });
 });
 

@@ -2,7 +2,9 @@
 
 ## Carousel handover
 
-The homepage uses static HTML, CSS and JavaScript. The shared content carousel supports looping navigation, touch swipes, arrow keys, pause/play, and reduced-motion preferences. Carousel content is currently authored in `index.html`; this repository has no CMS, admin interface, scheduling service, post feed, or individual case-study, Insights, or Journal pages. Slide creation, reordering, scheduling, automatic post population, and per-post related-content carousels therefore require a CMS/backend and page templates, and are not available in this static implementation.
+The homepage uses static HTML, CSS and JavaScript. Main sections can be reached from the expanded navigation or the home-page search, which links directly to matching case studies and career entries. The shared content carousels support looping navigation, touch swipes, arrow keys, pause/play, and reduced-motion preferences.
+
+Carousel and page content is authored in `index.html`. This repository has no CMS, admin interface, scheduling service, post feed, individual case-study, Insights or Journal pages, or photograph files. Slide editing, scheduling, automatic post population, related-content carousels, and actual owner/project photographs require supplied assets and/or a CMS/backend; these are not available in this static implementation. Only existing site graphics are used; no stock or external photos are added.
 
 ### Replace these graphic placeholders with approved real assets
 
