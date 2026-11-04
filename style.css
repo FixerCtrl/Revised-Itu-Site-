@@ -985,3 +985,211 @@ footer{padding-top:40px;padding-bottom:30px}
   .featured-carousel .featured-carousel-count{font-size:.59rem}
   .featured-carousel .carousel-hint{font-size:.58rem}
 }
+
+/* Screenshot-inspired, single-panel homepage carousel */
+.featured-carousel{padding:24px 0 30px;background:transparent;border:0}
+.featured-carousel .wrap{position:relative;max-width:1348px}
+.featured-carousel .carousel-stage,
+.featured-carousel .carousel-slide{min-height:clamp(360px,30vw,460px)}
+.featured-carousel .carousel-slide{
+  position:relative;
+  grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
+  gap:0;
+  padding:clamp(32px,4vw,58px) clamp(28px,4vw,52px) 82px;
+  overflow:hidden;
+  border:1px solid rgba(125,211,252,.25);
+  border-radius:26px;
+  background:
+    radial-gradient(ellipse at 82% 50%,rgba(56,189,248,.22),transparent 40%),
+    linear-gradient(115deg,#0b4f6c 0%,#123f60 56%,#172b48 100%);
+  box-shadow:0 20px 55px rgba(2,9,20,.24);
+}
+.featured-carousel .carousel-slide[hidden]{display:none}
+.featured-carousel .carousel-art{
+  position:relative;
+  min-height:100%;
+  aspect-ratio:auto;
+  padding:0;
+  overflow:visible;
+  display:grid;
+  place-items:center;
+  border:0;
+  border-radius:0;
+  background:none;
+}
+.featured-carousel .carousel-art::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  right:-72px;
+  width:clamp(260px,28vw,390px);
+  aspect-ratio:1;
+  transform:translateY(-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,
+    #172034 0 22%,
+    #fff 22.5% 38%,
+    #38bdf8 38.5% 54%,
+    #fff 54.5% 70%,
+    #7dd3fc 70.5% 73%,
+    transparent 73.5%);
+  filter:drop-shadow(0 10px 24px rgba(4,13,28,.2));
+}
+.featured-carousel .carousel-art::after{display:none}
+.featured-carousel .carousel-art>*{position:relative;z-index:1}
+.featured-carousel .carousel-art .art-label,
+.featured-carousel .carousel-art .art-mark{display:none}
+.featured-carousel .carousel-art strong{
+  width:min(190px,72%);
+  font:800 clamp(1.35rem,2.4vw,2.35rem)/.98 var(--head);
+  letter-spacing:-.045em;
+  text-align:center;
+  text-shadow:none;
+}
+.featured-carousel .carousel-copy{
+  position:relative;
+  z-index:2;
+  grid-column:1;
+  grid-row:1;
+  max-width:650px;
+  padding:0;
+}
+.featured-carousel .carousel-copy .eyebrow{
+  margin-bottom:16px;
+  color:#d5eaff;
+  font-size:.68rem;
+  letter-spacing:.16em;
+}
+.featured-carousel .carousel-copy h3{
+  max-width:640px;
+  margin-bottom:16px;
+  color:#fff;
+  font-size:clamp(2.35rem,4.2vw,4.1rem);
+  line-height:1.04;
+  letter-spacing:-.045em;
+}
+.featured-carousel .carousel-copy p{
+  max-width:540px;
+  color:rgba(255,255,255,.86);
+  font-size:clamp(.94rem,1.2vw,1.08rem);
+  line-height:1.6;
+}
+.featured-carousel .featured-action{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  min-height:48px;
+  margin-top:22px;
+  padding:0 22px;
+  border:1px solid #fff;
+  border-radius:999px;
+  background:#fff;
+  color:#102238;
+  font-size:.86rem;
+  font-weight:700;
+  transition:transform .2s,background-color .2s;
+}
+.featured-carousel .featured-action:hover{transform:translateY(-2px);background:#e8f7ff}
+.featured-carousel .carousel-toolbar{
+  position:absolute;
+  z-index:3;
+  right:clamp(28px,4vw,52px);
+  bottom:clamp(28px,3vw,40px);
+  left:clamp(28px,4vw,52px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:0;
+  border:0;
+}
+.featured-carousel .carousel-pagination{justify-content:flex-start;gap:10px}
+.featured-carousel .carousel-dot{
+  width:12px;
+  height:12px;
+  background:rgba(255,255,255,.45);
+}
+.featured-carousel .carousel-dot[aria-current="true"]{
+  width:34px;
+  background:#fff;
+}
+.featured-carousel .carousel-controls{gap:10px}
+.featured-carousel .carousel-arrow,
+.featured-carousel .carousel-toggle{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:50%;
+  background:rgba(255,255,255,.2);
+  color:#fff;
+  font:600 1.05rem Inter,sans-serif;
+  backdrop-filter:blur(8px);
+}
+.featured-carousel .carousel-toggle{font-size:.88rem}
+.featured-carousel .carousel-arrow:hover,
+.featured-carousel .carousel-toggle:hover{
+  transform:translateY(-1px);
+  border-color:rgba(255,255,255,.6);
+  background:rgba(255,255,255,.32);
+  color:#fff;
+}
+.featured-carousel .carousel-hint{display:none}
+
+@media(max-width:760px){
+  .featured-carousel{padding:16px 0 24px}
+  .featured-carousel .carousel-stage,
+  .featured-carousel .carousel-slide{min-height:390px}
+  .featured-carousel .carousel-slide{
+    display:block;
+    padding:30px 26px 82px;
+    border-radius:22px;
+  }
+  .featured-carousel .carousel-art{
+    position:absolute;
+    z-index:1;
+    inset:0 0 0 auto;
+    width:52%;
+    min-height:0;
+    pointer-events:none;
+    opacity:.34;
+  }
+  .featured-carousel .carousel-art::before{
+    right:-100px;
+    width:clamp(230px,48vw,320px);
+  }
+  .featured-carousel .carousel-art strong{display:none}
+  .featured-carousel .carousel-copy{max-width:82%;padding:0}
+  .featured-carousel .carousel-copy h3{font-size:clamp(2.15rem,7.3vw,3.2rem)}
+  .featured-carousel .carousel-copy p{font-size:.94rem}
+  .featured-carousel .carousel-toolbar{
+    right:24px;
+    bottom:22px;
+    left:24px;
+  }
+  .featured-carousel .carousel-controls{gap:7px}
+  .featured-carousel .carousel-arrow,
+  .featured-carousel .carousel-toggle{width:40px;height:40px}
+}
+@media(max-width:420px){
+  .featured-carousel .carousel-stage,
+  .featured-carousel .carousel-slide{min-height:410px}
+  .featured-carousel .carousel-slide{padding:26px 20px 78px}
+  .featured-carousel .carousel-copy{max-width:100%}
+  .featured-carousel .carousel-art{opacity:.22}
+  .featured-carousel .carousel-copy h3{max-width:300px;font-size:2.1rem}
+  .featured-carousel .carousel-copy p{max-width:300px;font-size:.88rem}
+  .featured-carousel .carousel-toolbar{right:18px;bottom:18px;left:18px}
+  .featured-carousel .carousel-pagination{gap:7px}
+  .featured-carousel .carousel-controls{gap:5px}
+  .featured-carousel .carousel-arrow,
+  .featured-carousel .carousel-toggle{width:36px;height:36px}
+}
+@media(prefers-reduced-motion:reduce){
+  .featured-carousel .carousel-toggle{display:none}
+  .featured-carousel .featured-action,
+  .featured-carousel .carousel-arrow,
+  .featured-carousel .carousel-toggle{transition:none}
+}

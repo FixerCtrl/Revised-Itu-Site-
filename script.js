@@ -70,11 +70,29 @@ const featuredCarousel = document.querySelector('.featured-carousel');
 if (featuredCarousel) {
   const slides = [...featuredCarousel.querySelectorAll('.carousel-slide')];
   const dots = [...featuredCarousel.querySelectorAll('[data-carousel-dot]')];
-  const counter = featuredCarousel.querySelector('[data-carousel-count]');
+  const toggleButton = featuredCarousel.querySelector('[data-carousel-toggle]');
+  const status = featuredCarousel.querySelector('[data-carousel-status]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let activeIndex = slides.findIndex(slide => !slide.hidden);
   let pointerStartX = null;
+  let userPaused = reducedMotion.matches;
+  let pointerInside = false;
+  let focusInside = false;
+  let rotationTimer;
 
-  const showSlide = index => {
+  const stopRotation = () => {
+    window.clearTimeout(rotationTimer);
+  };
+  const startRotation = () => {
+    stopRotation();
+    if (userPaused || pointerInside || focusInside || document.hidden || reducedMotion.matches) return;
+    rotationTimer = window.setTimeout(() => {
+      showSlide(activeIndex + 1, false);
+      startRotation();
+    }, 6500);
+  };
+
+  const showSlide = (index, announce = true) => {
     activeIndex = (index + slides.length) % slides.length;
     slides.forEach((slide, slideIndex) => {
       const active = slideIndex === activeIndex;
@@ -82,12 +100,26 @@ if (featuredCarousel) {
       slide.setAttribute('aria-label', `${slideIndex + 1} of ${slides.length}`);
       dots[slideIndex].setAttribute('aria-current', String(active));
     });
-    if (counter) counter.textContent = String(activeIndex + 1).padStart(2, '0');
+    if (status && announce) status.textContent = `Slide ${activeIndex + 1} of ${slides.length}`;
+    startRotation();
   };
 
+  const syncToggle = () => {
+    if (!toggleButton) return;
+    toggleButton.setAttribute('aria-pressed', String(userPaused));
+    toggleButton.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
+    toggleButton.textContent = userPaused ? '▶' : 'Ⅱ';
+  };
+
+  syncToggle();
   featuredCarousel.querySelector('[data-carousel-prev]')?.addEventListener('click', () => showSlide(activeIndex - 1));
   featuredCarousel.querySelector('[data-carousel-next]')?.addEventListener('click', () => showSlide(activeIndex + 1));
   dots.forEach((dot, index) => dot.addEventListener('click', () => showSlide(index)));
+  toggleButton?.addEventListener('click', () => {
+    userPaused = !userPaused;
+    syncToggle();
+    startRotation();
+  });
 
   featuredCarousel.addEventListener('keydown', event => {
     if (event.key === 'ArrowLeft') {
@@ -102,6 +134,24 @@ if (featuredCarousel) {
   featuredCarousel.addEventListener('pointerdown', event => {
     if (event.pointerType === 'touch') pointerStartX = event.clientX;
   });
+  featuredCarousel.addEventListener('pointerenter', () => {
+    pointerInside = true;
+    stopRotation();
+  });
+  featuredCarousel.addEventListener('pointerleave', () => {
+    pointerInside = false;
+    startRotation();
+  });
+  featuredCarousel.addEventListener('focusin', () => {
+    focusInside = true;
+    stopRotation();
+  });
+  featuredCarousel.addEventListener('focusout', event => {
+    if (!featuredCarousel.contains(event.relatedTarget)) {
+      focusInside = false;
+      startRotation();
+    }
+  });
   featuredCarousel.addEventListener('pointerup', event => {
     if (pointerStartX === null) return;
     const distance = event.clientX - pointerStartX;
@@ -111,4 +161,13 @@ if (featuredCarousel) {
   featuredCarousel.addEventListener('pointercancel', () => {
     pointerStartX = null;
   });
+  document.addEventListener('visibilitychange', startRotation);
+  reducedMotion.addEventListener('change', event => {
+    if (event.matches) {
+      userPaused = true;
+      syncToggle();
+    }
+    startRotation();
+  });
+  startRotation();
 }
