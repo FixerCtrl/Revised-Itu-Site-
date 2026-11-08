@@ -29,6 +29,7 @@ const siteEntries = [
 const searchInput = document.querySelector('#site-search-input');
 const results = document.querySelector('#search-results');
 if (searchInput && results) {
+  const searchableEntries = [...siteEntries];
   const normalize = value => value.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\p{L}\p{N}%]+/gu, ' ').trim();
   const query = new URLSearchParams(window.location.search).get('q') || '';
   searchInput.value = query;
@@ -43,7 +44,7 @@ if (searchInput && results) {
       return;
     }
 
-    const matches = siteEntries.filter(entry => {
+    const matches = searchableEntries.filter(entry => {
       const content = normalize(`${entry.title} ${entry.category} ${entry.text}`);
       return terms.every(term => content.includes(term));
     }).slice(0, 20);
@@ -80,4 +81,50 @@ if (searchInput && results) {
     showResults();
   });
   showResults();
+
+  fetch(new URL('content.json', window.location.href))
+    .then(response => {
+      if (!response.ok) throw new Error(`Content request failed: ${response.status}`);
+      return response.json();
+    })
+    .then(content => {
+      if (!Array.isArray(content.articles) || !Array.isArray(content.linkedinPosts)) {
+        throw new Error('Content must include article and LinkedIn post arrays.');
+      }
+
+      content.articles.forEach(article => {
+        if (!article || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article.slug) || typeof article.title !== 'string') {
+          throw new Error('Every searchable article must have a valid slug and title.');
+        }
+        if (article.body !== undefined && (!Array.isArray(article.body) || article.body.some(paragraph => typeof paragraph !== 'string'))) {
+          throw new Error(`Article ${article.slug} has an invalid body.`);
+        }
+        searchableEntries.push({
+          title: article.title,
+          category: article.category || 'Article',
+          url: `insights.html?post=${encodeURIComponent(article.slug)}`,
+          text: `${article.excerpt || ''} ${(article.body || []).join(' ')}`
+        });
+      });
+
+      content.linkedinPosts.forEach(post => {
+        if (!post || typeof post.title !== 'string' || typeof post.url !== 'string') {
+          throw new Error('Every searchable LinkedIn post must have a title and URL.');
+        }
+        const url = new URL(post.url);
+        if (url.protocol !== 'https:' || !(url.hostname === 'linkedin.com' || url.hostname.endsWith('.linkedin.com'))) {
+          throw new Error(`LinkedIn post "${post.title}" must have an HTTPS LinkedIn URL.`);
+        }
+        searchableEntries.push({
+          title: post.title,
+          category: 'LinkedIn',
+          url: post.url,
+          text: post.excerpt || ''
+        });
+      });
+      showResults();
+    })
+    .catch(error => {
+      console.error('Unable to add published content to site search.', error);
+    });
 }

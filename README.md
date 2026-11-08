@@ -23,7 +23,7 @@ The light theme is the default. Visitors can switch to the original navy-and-cya
 
 The homepage has an owner portrait space and three labelled photo spaces for research, mill/process and speaking/recognition images. Replace the `.owner-photo-space` placeholder in `index.html` with `<img class="owner-photo-image" src="images/portfolio/itumeleng.jpg" alt="Itumeleng D. Kgongwane">`. Replace each `.photo-slot` with an image such as `<img class="photo-slot-image" src="images/portfolio/lab.jpg" alt="Itumeleng reviewing a laboratory trial">`. Use approved images and descriptive alt text. Article thumbnails use the `image` and `imageAlt` fields in `content.json`.
 
-The primary navigation is intentionally limited to Home, Selected work, Expertise, About and Insights. Career, Awards, Resources, Search and Contact are grouped under “More”; the contact call-to-action remains visible on larger screens.
+The primary navigation links directly to Home, Selected work, Expertise, About, Career, Insights and Resources. Search is a visible header action on every page and a search form is available near the top of the homepage. Awards are grouped with the career story and linked from the Career and About pages. The contact call-to-action remains visible on larger screens.
 
 The Resources page includes a project readiness checklist. Progress is stored only in the visitor’s browser using local storage and is never submitted. Visitors can print the worksheet or save it as a PDF from their browser.
 

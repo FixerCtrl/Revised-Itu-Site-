@@ -116,3 +116,11 @@ The examples show that clear identity, evidence-rich work, durable content and s
 - **Domain and indexing:** confirm the final HTTPS domain and deployment path, run `node generate-site-files.mjs https://your-public-domain.example`, deploy and verify the sitemap, robots rules, RSS feed and canonical URLs, then verify the domain and submit the sitemap in Google Search Console.
 - **Final experience checks:** test keyboard and mobile behavior, print output, screen-reader announcements, structured data and social previews on the deployed site. Browser/assistive-technology checks have not yet been performed.
 - **Optional:** decide whether to add a maintained consent-based newsletter or privacy-conscious analytics. Consider a CMS only if direct uploads, drafts or multiple editors are needed; the static site itself has no secure admin/upload dashboard.
+
+### Update Two
+
+**Date:** 8 November 2026
+
+**Completed:** Replaced the hidden “More” menu with direct links to Home, Selected work, Expertise, About, Career, Insights and Resources. Added a persistent Search action to every page and a search form near the top of the homepage. Search now includes published articles and curated LinkedIn previews from `content.json`. Career and awards are cross-linked, and Insights and Resources link to related material.
+
+**Still to do:** Confirm the final public domain and test the revised navigation and search on the deployed site, especially at desktop, tablet and phone widths. Search content is limited to the pages, projects and supplied publishing data currently included; owner-approved images, CV, real articles and post previews are still needed to complete the broader content goals in Update One.
