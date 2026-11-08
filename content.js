@@ -50,7 +50,7 @@ const createArticleCard = article => {
   copy.append(createElement('h3', '', article.title));
   copy.append(createElement('p', 'content-excerpt', article.excerpt));
 
-  const link = createElement('a', 'text-link', 'Read article →');
+  const link = createElement('a', 'text-link', 'Read article');
   link.href = `insights.html?post=${encodeURIComponent(article.slug)}`;
   copy.append(link);
   card.append(copy);
@@ -64,7 +64,7 @@ const createLinkedInCard = post => {
   copy.append(createElement('h3', '', post.title));
   copy.append(createElement('p', 'content-excerpt', post.excerpt));
 
-  const link = createElement('a', 'text-link', 'View original post ↗');
+  const link = createElement('a', 'text-link', 'View original post');
   link.href = post.url;
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
@@ -73,32 +73,9 @@ const createLinkedInCard = post => {
   return card;
 };
 
-const createPlaceholderCard = (type, index) => {
-  const isArticle = type === 'article';
-  const card = createElement('article', `content-card content-placeholder-card${isArticle ? '' : ' social-post-card'}`);
-  card.append(createElement('div',
-    `content-card-image content-image-placeholder ${isArticle ? 'article-image-slot' : 'linkedin-image-slot'}`,
-    isArticle ? 'Article cover image' : 'Post image'));
-  const copy = createElement('div', 'content-card-copy');
-  copy.append(createElement('p', 'content-meta', isArticle ? `ARTICLE PREVIEW ${String(index).padStart(2, '0')}` : `LINKEDIN PREVIEW ${String(index).padStart(2, '0')}`));
-  copy.append(createElement('h3', '', isArticle ? 'New article coming soon' : 'LinkedIn post preview'));
-  copy.append(createElement('p', 'content-excerpt', isArticle
-    ? 'A new perspective on engineering, innovation and commercial value will appear here.'
-    : 'A selected update from Itumeleng’s professional profile will be featured here.'));
-  copy.append(createElement('span', 'content-placeholder-note', isArticle ? 'Article preview' : 'Selected post preview'));
-  card.append(copy);
-  return card;
-};
-
-const renderCards = (container, items, renderCard, emptyMessage, placeholderType) => {
+const renderCards = (container, items, renderCard, emptyMessage) => {
   container.replaceChildren();
-  const placeholderCount = Number(container.dataset.placeholderCount) || 0;
   const cards = items.map(renderCard);
-  if (placeholderType && placeholderCount > cards.length) {
-    for (let index = cards.length + 1; index <= placeholderCount; index += 1) {
-      cards.push(createPlaceholderCard(placeholderType, index));
-    }
-  }
   if (!cards.length) {
     container.append(createElement('p', 'content-empty', emptyMessage));
     return;
@@ -111,7 +88,7 @@ const renderArticle = (article, listing, reader) => {
   reader.hidden = false;
   reader.replaceChildren();
 
-  const back = createElement('a', 'text-link', '← All insights');
+  const back = createElement('a', 'text-link', 'All insights');
   back.href = 'insights.html';
   reader.append(back);
 
@@ -125,6 +102,37 @@ const renderArticle = (article, listing, reader) => {
   const body = createElement('div', 'article-reader-body');
   (article.body || []).forEach(paragraph => body.append(createElement('p', '', paragraph)));
   reader.append(body);
+
+  const description = article.excerpt;
+  document.title = `${article.title} | Itumeleng Kgongwane`;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+  const articleUrl = window.location.href;
+  document.querySelector('meta[property="og:url"]')?.setAttribute('content', articleUrl);
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = articleUrl;
+
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description,
+    datePublished: `${article.date}T00:00:00Z`,
+    author: {
+      '@type': 'Person',
+      name: 'Itumeleng D. Kgongwane',
+      url: new URL('about.html', window.location.href).href
+    },
+    mainEntityOfPage: window.location.href
+  };
+  if (article.image) structuredData.image = new URL(article.image, window.location.href).href;
+  const schema = createElement('script');
+  schema.type = 'application/ld+json';
+  schema.id = 'article-structured-data';
+  schema.textContent = JSON.stringify(structuredData);
+  document.querySelector('#article-structured-data')?.remove();
+  document.head.append(schema);
 };
 
 const showContentError = () => {
@@ -158,16 +166,42 @@ fetch(contentUrl)
     const articles = newestFirst(content.articles);
     const linkedinPosts = newestFirst(content.linkedinPosts);
 
-    document.querySelectorAll('[data-articles]').forEach(container => {
-      const limit = Number(container.dataset.limit);
-      renderCards(container, Number.isFinite(limit) ? articles.slice(0, limit) : articles,
-        createArticleCard, 'No articles published yet. Check back soon.', 'article');
-    });
+    const articleContainers = [...document.querySelectorAll('[data-articles]')];
+    const articleFilterControls = document.querySelector('[data-article-filter-controls]');
+    const articleFilter = document.querySelector('[data-article-filter]');
+    const categoryFilter = document.querySelector('[data-article-category]');
+    if (articleFilterControls) {
+      articleFilterControls.hidden = articles.length === 0;
+      if (categoryFilter) {
+        [...new Set(articles.map(article => article.category))].sort().forEach(category => {
+          const option = createElement('option', '', category);
+          option.value = category;
+          categoryFilter.append(option);
+        });
+      }
+    }
+
+    const renderArticles = () => {
+      articleContainers.forEach(container => {
+        const limit = Number(container.dataset.limit);
+        const source = Number.isFinite(limit) ? articles.slice(0, limit) : articles;
+        const query = articleFilter?.value.trim().toLocaleLowerCase() || '';
+        const category = categoryFilter?.value || '';
+        const filtered = source.filter(article =>
+          (!query || `${article.title} ${article.category} ${article.excerpt}`.toLocaleLowerCase().includes(query))
+          && (!category || article.category === category));
+        renderCards(container, filtered, createArticleCard,
+          query || category ? 'No articles match these filters.' : 'No articles have been published yet.');
+      });
+    };
+    articleFilter?.addEventListener('input', renderArticles);
+    categoryFilter?.addEventListener('change', renderArticles);
+    renderArticles();
 
     document.querySelectorAll('[data-linkedin-posts]').forEach(container => {
       const limit = Number(container.dataset.limit);
       renderCards(container, Number.isFinite(limit) ? linkedinPosts.slice(0, limit) : linkedinPosts,
-        createLinkedInCard, 'No recent posts added yet. Visit LinkedIn to see what Itumeleng is sharing.', 'linkedin');
+        createLinkedInCard, 'No LinkedIn post previews have been added yet. Visit the profile for updates.');
     });
 
     const postSlug = new URLSearchParams(window.location.search).get('post');
@@ -177,7 +211,6 @@ fetch(contentUrl)
       const article = articles.find(item => item.slug === postSlug);
       if (listing && reader && article) {
         renderArticle(article, listing, reader);
-        document.title = `${article.title} | Itumeleng Kgongwane`;
       } else if (listing && reader) {
         listing.hidden = true;
         reader.hidden = false;

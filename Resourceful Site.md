@@ -91,3 +91,28 @@ The examples show that clear identity, evidence-rich work, durable content and s
 - [Martin Fowler](https://martinfowler.com/)
 - [Without Hot Air](https://www.withouthotair.com/)
 - [OXMAN](https://www.oxman.com/)
+
+## Updates
+
+### Update One
+
+**Date:** 8 November 2026
+
+**Progress:** Approximately 70% of the recommendations that can be implemented using the current repository and available verified content are complete. This is an estimate of implementation progress, not a measure of SEO results or site quality. Remaining work depends on owner-supplied materials, approval of public claims, and the final public domain.
+
+**Completed**
+
+- Added a reusable project-readiness worksheet at [resources.html](./resources.html), with locally saved checklist progress and print-to-PDF support.
+- Added Resources to the grouped navigation and site search without expanding the main menu.
+- Added article search and topic filters to Insights; removed invented placeholder cards in favor of clear empty states. The homepage shows up to three published articles and four curated LinkedIn previews when real content is supplied.
+- Added profile-page and published-article structured data, page social-sharing metadata, and runtime canonical/Open Graph URLs for HTTPS deployments.
+- Styled text links as buttons without nesting interactive elements, removed decorative arrows from links, and labelled the carousel controls Previous/Next.
+- Added a generator for `sitemap.xml`, `robots.txt` and `feed.xml`. It awaits the final public HTTPS domain and has not been run against an assumed domain.
+
+**Still required to reach 100%**
+
+- **Owner assets and approval:** provide approved portrait, research, mill/process and speaking/recognition images with alt text; provide an approved CV/profile; confirm public biography, title, affiliations, awards, dates and contact details; approve project metrics and claims for publication; supply actual articles, LinkedIn previews and any approved testimonials.
+- **Social sharing:** provide an approved preview image. Open Graph titles and descriptions are in place, but no image is configured because an approved asset is not available.
+- **Domain and indexing:** confirm the final HTTPS domain and deployment path, run `node generate-site-files.mjs https://your-public-domain.example`, deploy and verify the sitemap, robots rules, RSS feed and canonical URLs, then verify the domain and submit the sitemap in Google Search Console.
+- **Final experience checks:** test keyboard and mobile behavior, print output, screen-reader announcements, structured data and social previews on the deployed site. Browser/assistive-technology checks have not yet been performed.
+- **Optional:** decide whether to add a maintained consent-based newsletter or privacy-conscious analytics. Consider a CMS only if direct uploads, drafts or multiple editors are needed; the static site itself has no secure admin/upload dashboard.

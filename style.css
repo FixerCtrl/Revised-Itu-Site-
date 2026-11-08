@@ -2020,6 +2020,147 @@ footer{background:#17313a}
   .showcase-intro{margin-top:12px}
 }
 
+.text-link{
+  min-height:42px;
+  justify-content:center;
+  padding:9px 16px;
+  border:1px solid var(--line2);
+  border-radius:999px;
+  background:var(--card);
+  color:var(--cyd);
+  text-decoration:none;
+  transition:background-color .2s,border-color .2s,color .2s;
+}
+.text-link:hover{
+  border-color:var(--cy);
+  background:var(--cy);
+  color:#08212c;
+  text-decoration:none;
+}
+:root[data-theme="dark"] .text-link{color:var(--cy2)}
+:root[data-theme="dark"] .text-link:hover{color:#08212c}
+.text-link:focus-visible,.featured-action:focus-visible{
+  outline:3px solid var(--cy);
+  outline-offset:3px;
+}
+.featured-carousel .carousel-arrow{
+  width:auto;
+  min-width:86px;
+  height:44px;
+  padding:0 14px;
+  border-radius:999px;
+  font-size:.72rem;
+  letter-spacing:.04em;
+}
+
+.resource-layout{
+  display:grid;
+  grid-template-columns:minmax(240px,.72fr) minmax(0,1.28fr);
+  gap:clamp(28px,6vw,82px);
+  align-items:start;
+}
+.resource-intro{
+  position:sticky;
+  top:120px;
+  padding:clamp(22px,3vw,34px);
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:var(--card);
+}
+.resource-intro h2{margin-bottom:16px;font-size:clamp(1.7rem,3vw,2.4rem)}
+.resource-intro>p{margin-top:14px;color:var(--body);font-size:.92rem}
+.resource-intro .resource-progress{color:var(--cyd);font-weight:700}
+:root[data-theme="dark"] .resource-intro .resource-progress{color:var(--cy2)}
+.resource-storage-note{font-size:.8rem!important}
+.resource-actions{display:grid;gap:10px;margin-top:22px}
+.resource-actions .btn{justify-content:center;padding:13px 18px;font-size:.7rem;letter-spacing:.1em}
+.resource-error{padding:10px;border-left:3px solid #b54d3d;color:#8f3428!important}
+.resource-checklist{display:grid;gap:14px}
+.resource-checklist fieldset{
+  min-width:0;
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--card);
+}
+.resource-checklist legend{
+  padding:0 8px;
+  color:var(--text);
+  font-size:1.04rem;
+  font-weight:700;
+}
+.resource-checklist legend span{
+  margin-right:8px;
+  color:var(--cyd);
+  font:600 .72rem var(--mono);
+}
+:root[data-theme="dark"] .resource-checklist legend span{color:var(--cy2)}
+.resource-checklist label{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  padding:13px 4px;
+  border-top:1px solid var(--line);
+  color:var(--body);
+  cursor:pointer;
+}
+.resource-checklist label:first-of-type{border-top:0}
+.resource-checklist input{
+  width:19px;
+  height:19px;
+  flex:none;
+  margin-top:2px;
+  accent-color:var(--cyd);
+}
+:root[data-theme="dark"] .resource-checklist input{accent-color:var(--cy)}
+.resource-checklist label:focus-within{outline:2px solid var(--cy);outline-offset:3px}
+.resource-home-link{margin-top:22px}
+.insights-filters{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  margin:0 0 22px;
+}
+.insights-filters[hidden]{display:none}
+.insights-filters label{display:grid;gap:6px;color:var(--body);font-size:.82rem;font-weight:600}
+.insights-filters input,.insights-filters select{
+  min-width:0;
+  min-height:46px;
+  padding:10px 12px;
+  border:1px solid var(--line2);
+  border-radius:10px;
+  background:var(--card);
+  color:var(--text);
+  font:400 .9rem Inter,sans-serif;
+}
+.insights-filters input:focus,.insights-filters select:focus{outline:3px solid rgba(8,118,111,.2);border-color:var(--cy)}
+
+@media(max-width:800px){
+  .resource-layout{grid-template-columns:1fr}
+  .resource-intro{position:static}
+}
+@media(max-width:560px){
+  .insights-filters{grid-template-columns:1fr}
+  .featured-carousel .carousel-arrow{min-width:72px;padding:0 10px;font-size:.65rem}
+}
+@media print{
+  body{background:#fff!important;color:#111!important}
+  .nav,footer,.resource-actions,.skip-link,.page-next{display:none!important}
+  main,.page-section,.page-section-alt{background:#fff!important}
+  .page-hero{padding:20px 0}
+  .page-hero h1{font-size:28pt}
+  .resource-layout{display:block}
+  .resource-intro,.resource-checklist fieldset{break-inside:avoid;border:1px solid #999;background:#fff;box-shadow:none}
+  .resource-intro{margin-bottom:16px;padding:14px}
+  .resource-intro h2{font-size:17pt}
+  .resource-intro>p,.resource-checklist label{color:#222!important}
+  .resource-checklist{gap:8px}
+  .resource-checklist fieldset{margin-bottom:8px;padding:10px}
+  .resource-checklist legend,.resource-checklist legend span{color:#111!important}
+  .resource-checklist label{padding:6px 2px}
+  .resource-checklist input{accent-color:#111}
+}
+
 /* The original navy and cyan palette is available as a user-selectable theme. */
 :root[data-theme="dark"]{
   color-scheme:dark;

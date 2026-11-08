@@ -22,6 +22,7 @@ const siteEntries = [
   { title: 'General Manager’s Award', category: 'Award', url: 'awards.html', text: '2024 Accolade stage gate financial metrics roll out' },
   { title: 'Global Catalyst Compass Award nominee', category: 'Award', url: 'awards.html', text: '2013 BASF PGM recycle inventory optimisation' },
   { title: 'Insights and Journal', category: 'Insights', url: 'insights.html', text: 'writing articles posts journal reflections engineering finance innovation leadership no published posts' },
+  { title: 'Project readiness worksheet', category: 'Resource', url: 'resources.html', text: 'engineering technical commercial investment project checklist evidence operations case decision readiness' },
   { title: 'Contact and advisory enquiries', category: 'Contact', url: 'contact.html', text: 'email phone advisory board speaking Pretoria technical due diligence commercialisation process sustainability market analysis' }
 ];
 
