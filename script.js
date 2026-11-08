@@ -15,6 +15,9 @@ if (menuButton && mainNavigation) {
     menuButton.setAttribute('aria-label', 'Open menu');
     menuButton.textContent = 'Menu';
     mainNavigation.classList.remove('open');
+    mainNavigation.querySelectorAll('details').forEach(item => {
+      item.open = false;
+    });
   }));
 
   document.addEventListener('keydown', event => {
@@ -23,6 +26,9 @@ if (menuButton && mainNavigation) {
       menuButton.setAttribute('aria-label', 'Open menu');
       menuButton.textContent = 'Menu';
       mainNavigation.classList.remove('open');
+      mainNavigation.querySelectorAll('details').forEach(item => {
+        item.open = false;
+      });
       menuButton.focus();
     }
   });

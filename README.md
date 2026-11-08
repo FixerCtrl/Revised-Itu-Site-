@@ -20,7 +20,9 @@ All provided career and project information is kept in the relevant page. The si
 
 The light theme is the default. Visitors can switch to the original navy-and-cyan dark theme from any page; their choice is saved in that browser.
 
-The homepage has three labelled photo spaces for research, mill/process and speaking/recognition images. Replace each `.photo-slot` placeholder in `index.html` with an image such as `<img class="photo-slot-image" src="images/portfolio/lab.jpg" alt="Itumeleng reviewing a laboratory trial">`; use approved images and descriptive alt text. Article thumbnails use the `image` and `imageAlt` fields in `content.json`.
+The homepage has an owner portrait space and three labelled photo spaces for research, mill/process and speaking/recognition images. Replace the `.owner-photo-space` placeholder in `index.html` with `<img class="owner-photo-image" src="images/portfolio/itumeleng.jpg" alt="Itumeleng D. Kgongwane">`. Replace each `.photo-slot` with an image such as `<img class="photo-slot-image" src="images/portfolio/lab.jpg" alt="Itumeleng reviewing a laboratory trial">`. Use approved images and descriptive alt text. Article thumbnails use the `image` and `imageAlt` fields in `content.json`.
+
+The primary navigation is intentionally limited to Home, Selected work, Expertise, About and Insights. Career, Awards, Search and Contact are grouped under “More”; the contact call-to-action remains visible on larger screens.
 
 ### Publishing articles and LinkedIn posts
 

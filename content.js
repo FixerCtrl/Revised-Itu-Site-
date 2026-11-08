@@ -39,7 +39,7 @@ const createImage = (image, alt, className = 'content-card-image') => {
     return img;
   }
 
-  return createElement('div', `${className} content-image-placeholder`, 'Add an image in content.json');
+  return createElement('div', `${className} content-image-placeholder`, 'Article cover image');
 };
 
 const createArticleCard = article => {
@@ -73,13 +73,37 @@ const createLinkedInCard = post => {
   return card;
 };
 
-const renderCards = (container, items, renderCard, emptyMessage) => {
+const createPlaceholderCard = (type, index) => {
+  const isArticle = type === 'article';
+  const card = createElement('article', `content-card content-placeholder-card${isArticle ? '' : ' social-post-card'}`);
+  card.append(createElement('div',
+    `content-card-image content-image-placeholder ${isArticle ? 'article-image-slot' : 'linkedin-image-slot'}`,
+    isArticle ? 'Article cover image' : 'Post image'));
+  const copy = createElement('div', 'content-card-copy');
+  copy.append(createElement('p', 'content-meta', isArticle ? `ARTICLE PREVIEW ${String(index).padStart(2, '0')}` : `LINKEDIN PREVIEW ${String(index).padStart(2, '0')}`));
+  copy.append(createElement('h3', '', isArticle ? 'New article coming soon' : 'LinkedIn post preview'));
+  copy.append(createElement('p', 'content-excerpt', isArticle
+    ? 'A new perspective on engineering, innovation and commercial value will appear here.'
+    : 'A selected update from Itumeleng’s professional profile will be featured here.'));
+  copy.append(createElement('span', 'content-placeholder-note', isArticle ? 'Article preview' : 'Selected post preview'));
+  card.append(copy);
+  return card;
+};
+
+const renderCards = (container, items, renderCard, emptyMessage, placeholderType) => {
   container.replaceChildren();
-  if (!items.length) {
+  const placeholderCount = Number(container.dataset.placeholderCount) || 0;
+  const cards = items.map(renderCard);
+  if (placeholderType && placeholderCount > cards.length) {
+    for (let index = cards.length + 1; index <= placeholderCount; index += 1) {
+      cards.push(createPlaceholderCard(placeholderType, index));
+    }
+  }
+  if (!cards.length) {
     container.append(createElement('p', 'content-empty', emptyMessage));
     return;
   }
-  items.forEach(item => container.append(renderCard(item)));
+  container.append(...cards);
 };
 
 const renderArticle = (article, listing, reader) => {
@@ -127,7 +151,7 @@ fetch(contentUrl)
     });
     content.linkedinPosts.forEach((post, index) => {
       const url = new URL(post.url);
-      if (url.protocol !== 'https:' || !url.hostname.endsWith('linkedin.com')) {
+      if (url.protocol !== 'https:' || !(url.hostname === 'linkedin.com' || url.hostname.endsWith('.linkedin.com'))) {
         throw new Error(`linkedinPosts[${index}].url must be an HTTPS LinkedIn URL.`);
       }
     });
@@ -137,13 +161,13 @@ fetch(contentUrl)
     document.querySelectorAll('[data-articles]').forEach(container => {
       const limit = Number(container.dataset.limit);
       renderCards(container, Number.isFinite(limit) ? articles.slice(0, limit) : articles,
-        createArticleCard, 'No articles published yet. Check back soon.');
+        createArticleCard, 'No articles published yet. Check back soon.', 'article');
     });
 
     document.querySelectorAll('[data-linkedin-posts]').forEach(container => {
       const limit = Number(container.dataset.limit);
       renderCards(container, Number.isFinite(limit) ? linkedinPosts.slice(0, limit) : linkedinPosts,
-        createLinkedInCard, 'No recent posts added yet. Visit LinkedIn to see what Itumeleng is sharing.');
+        createLinkedInCard, 'No recent posts added yet. Visit LinkedIn to see what Itumeleng is sharing.', 'linkedin');
     });
 
     const postSlug = new URLSearchParams(window.location.search).get('post');
