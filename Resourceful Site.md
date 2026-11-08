@@ -124,3 +124,11 @@ The examples show that clear identity, evidence-rich work, durable content and s
 **Completed:** Replaced the hidden “More” menu with direct links to Home, Selected work, Expertise, About, Career, Insights and Resources. Added a persistent Search action to every page and a search form near the top of the homepage. Search now includes published articles and curated LinkedIn previews from `content.json`. Career and awards are cross-linked, and Insights and Resources link to related material.
 
 **Still to do:** Confirm the final public domain and test the revised navigation and search on the deployed site, especially at desktop, tablet and phone widths. Search content is limited to the pages, projects and supplied publishing data currently included; owner-approved images, CV, real articles and post previews are still needed to complete the broader content goals in Update One.
+
+### Update Three
+
+**Date:** 8 November 2026
+
+**Completed:** Reordered the homepage flow to introduce the owner first, provide search, establish impact with outcome metrics, then show featured work, the owner’s perspective, next-step destinations, recognition, photo spaces, updates and contact. Restyled the featured-work carousel with the site’s light/dark surfaces, typography, metric colors, button treatments and responsive layout.
+
+**Still to do:** Review the visual result in a browser at desktop, tablet and phone sizes. Replace the portrait and project-photo spaces with owner-approved images when available. No content or claims were invented for this layout update.
