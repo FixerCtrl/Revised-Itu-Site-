@@ -132,3 +132,19 @@ The examples show that clear identity, evidence-rich work, durable content and s
 **Completed:** Reordered the homepage flow to introduce the owner first, provide search, establish impact with outcome metrics, then show featured work, the owner’s perspective, next-step destinations, recognition, photo spaces, updates and contact. Restyled the featured-work carousel with the site’s light/dark surfaces, typography, metric colors, button treatments and responsive layout.
 
 **Still to do:** Review the visual result in a browser at desktop, tablet and phone sizes. Replace the portrait and project-photo spaces with owner-approved images when available. No content or claims were invented for this layout update.
+
+### Update Four
+
+**Date:** 8 November 2026
+
+**Completed:** Added a dedicated Blogs tab and local article archive with search across titles, topics, summaries and article text. Article links, sitemap entries and RSS links now point to the Blogs page. The homepage reserves three clearly labelled slots each for blog and LinkedIn previews; the Blogs archive and LinkedIn page also show matching content placeholders rather than fabricated posts. Added a repository-based publishing and deployment channel: changes pushed to `main` are validated, packaged and deployed by GitHub Actions, with a manual workflow-dispatch option. Updated the publishing documentation to explain how to add posts and monitor deployment.
+
+**Still to do:** Enable GitHub Pages with **GitHub Actions** as the source if it is not already enabled, then confirm the first workflow run succeeds. GitHub settings could not be inspected in this environment, so remote deployment has not been verified. Replace the six placeholders with approved blog and LinkedIn posts, and replace portfolio image spaces with owner-approved photographs as they become available. A browser-based CMS/upload dashboard remains out of scope for this static implementation.
+
+### Update Five
+
+**Date:** 8 November 2026
+
+**Completed:** Made the owner’s verified LinkedIn presence more visible with a branded **Follow on LinkedIn** action in the homepage introduction and a clearly labelled LinkedIn follow link in every page footer, alongside email and phone contact options. Updated the site guidance to avoid implying accounts on platforms whose profile URLs have not been supplied.
+
+**Still to do:** If the owner wants other social platforms featured, provide the exact public profile URLs and confirm they are owner-controlled. The site currently promotes LinkedIn because it is the only verified social profile available in the repository.

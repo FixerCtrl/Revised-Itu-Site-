@@ -1,0 +1,65 @@
+name: Build and deploy portfolio
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate source files
+        run: |
+          node --check script.js
+          node --check search.js
+          node --check theme.js
+          node --check content.js
+          node --check resources.js
+          node --check site.js
+          node --check generate-site-files.mjs
+          node --check build-site.mjs
+          node -e "JSON.parse(require('node:fs').readFileSync('content.json', 'utf8'))"
+
+      - name: Generate sitemap, robots rules, and RSS feed
+        run: node generate-site-files.mjs https://fixerctrl.github.io/Revised-Itu-Site-/ dist
+
+      - name: Assemble public site
+        run: node build-site.mjs dist
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

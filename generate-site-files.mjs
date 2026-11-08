@@ -1,4 +1,4 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const [siteOrigin, outputDirectory = process.cwd()] = process.argv.slice(2);
@@ -30,7 +30,7 @@ if (!siteOrigin) {
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article.slug)) {
       throw new Error(`Invalid article slug: ${article.slug}`);
     }
-    return absoluteUrl(`insights.html?post=${encodeURIComponent(article.slug)}`);
+    return absoluteUrl(`blogs.html?post=${encodeURIComponent(article.slug)}`);
   });
   const sitemap = [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -46,7 +46,7 @@ if (!siteOrigin) {
     if (!article.title || !article.date || !article.excerpt || Number.isNaN(Date.parse(`${article.date}T00:00:00Z`))) {
       throw new Error(`Article ${article.slug} needs a title, valid YYYY-MM-DD date, and excerpt.`);
     }
-    const link = absoluteUrl(`insights.html?post=${encodeURIComponent(article.slug)}`);
+    const link = absoluteUrl(`blogs.html?post=${encodeURIComponent(article.slug)}`);
     return [
       '<item>',
       `<title>${escapeXml(article.title)}</title>`,
@@ -60,8 +60,8 @@ if (!siteOrigin) {
   const feed = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<rss version="2.0"><channel>',
-    `<title>${escapeXml('Itumeleng D. Kgongwane — Insights')}</title>`,
-    `<link>${escapeXml(absoluteUrl('insights.html'))}</link>`,
+    `<title>${escapeXml('Itumeleng D. Kgongwane — Blogs')}</title>`,
+    `<link>${escapeXml(absoluteUrl('blogs.html'))}</link>`,
     `<description>${escapeXml('Articles on engineering, finance, innovation and leadership.')}</description>`,
     latestDate ? `<lastBuildDate>${new Date(`${latestDate}T00:00:00Z`).toUTCString()}</lastBuildDate>` : '',
     items,
@@ -70,6 +70,7 @@ if (!siteOrigin) {
   ].filter(Boolean).join('\n');
   const robots = `User-agent: *\nAllow: /\nSitemap: ${absoluteUrl('sitemap.xml')}\n`;
 
+  await mkdir(output, { recursive: true });
   await Promise.all([
     writeFile(resolve(output, 'sitemap.xml'), sitemap),
     writeFile(resolve(output, 'feed.xml'), feed),

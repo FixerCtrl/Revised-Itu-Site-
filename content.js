@@ -51,7 +51,7 @@ const createArticleCard = article => {
   copy.append(createElement('p', 'content-excerpt', article.excerpt));
 
   const link = createElement('a', 'text-link', 'Read article');
-  link.href = `insights.html?post=${encodeURIComponent(article.slug)}`;
+  link.href = `blogs.html?post=${encodeURIComponent(article.slug)}`;
   copy.append(link);
   card.append(copy);
   return card;
@@ -73,14 +73,35 @@ const createLinkedInCard = post => {
   return card;
 };
 
-const renderCards = (container, items, renderCard, emptyMessage) => {
+const createPlaceholderCard = (type, index) => {
+  const isArticle = type === 'article';
+  const card = createElement('article', `content-card content-placeholder-card${isArticle ? '' : ' social-post-card'}`);
+  card.append(createElement('div',
+    `content-card-image content-image-placeholder ${isArticle ? 'article-image-slot' : 'linkedin-image-slot'}`,
+    isArticle ? 'Article image space' : 'LinkedIn post image space'));
+  const copy = createElement('div', 'content-card-copy');
+  const label = isArticle ? 'BLOG POST' : 'LINKEDIN POST';
+  copy.append(createElement('p', 'content-meta', `${label} SLOT ${String(index).padStart(2, '0')}`));
+  copy.append(createElement('h3', '', isArticle ? 'Your next blog post' : 'Your next LinkedIn update'));
+  copy.append(createElement('p', 'content-excerpt', isArticle
+    ? 'Add an approved article to content.json to publish it here and in the Blogs archive.'
+    : 'Add an approved post preview to content.json to feature it here.'));
+  copy.append(createElement('span', 'content-placeholder-note', 'Content placeholder'));
+  card.append(copy);
+  return card;
+};
+
+const renderCards = (container, items, renderCard, emptyMessage, placeholderType, showPlaceholders = true) => {
   container.replaceChildren();
   const cards = items.map(renderCard);
-  if (!cards.length) {
-    container.append(createElement('p', 'content-empty', emptyMessage));
-    return;
+  const placeholderCount = Number(container.dataset.placeholderCount) || 0;
+  if (showPlaceholders && placeholderType && cards.length < placeholderCount) {
+    for (let index = cards.length + 1; index <= placeholderCount; index += 1) {
+      cards.push(createPlaceholderCard(placeholderType, index));
+    }
   }
-  container.append(...cards);
+  if (!cards.length) container.append(createElement('p', 'content-empty', emptyMessage));
+  else container.append(...cards);
 };
 
 const renderArticle = (article, listing, reader) => {
@@ -88,8 +109,8 @@ const renderArticle = (article, listing, reader) => {
   reader.hidden = false;
   reader.replaceChildren();
 
-  const back = createElement('a', 'text-link', 'All insights');
-  back.href = 'insights.html';
+  const back = createElement('a', 'text-link', 'All blogs');
+  back.href = 'blogs.html';
   reader.append(back);
 
   const header = createElement('header', 'article-reader-header');
@@ -167,18 +188,14 @@ fetch(contentUrl)
     const linkedinPosts = newestFirst(content.linkedinPosts);
 
     const articleContainers = [...document.querySelectorAll('[data-articles]')];
-    const articleFilterControls = document.querySelector('[data-article-filter-controls]');
     const articleFilter = document.querySelector('[data-article-filter]');
     const categoryFilter = document.querySelector('[data-article-category]');
-    if (articleFilterControls) {
-      articleFilterControls.hidden = articles.length === 0;
-      if (categoryFilter) {
-        [...new Set(articles.map(article => article.category))].sort().forEach(category => {
-          const option = createElement('option', '', category);
-          option.value = category;
-          categoryFilter.append(option);
-        });
-      }
+    if (categoryFilter) {
+      [...new Set(articles.map(article => article.category))].sort().forEach(category => {
+        const option = createElement('option', '', category);
+        option.value = category;
+        categoryFilter.append(option);
+      });
     }
 
     const renderArticles = () => {
@@ -188,10 +205,11 @@ fetch(contentUrl)
         const query = articleFilter?.value.trim().toLocaleLowerCase() || '';
         const category = categoryFilter?.value || '';
         const filtered = source.filter(article =>
-          (!query || `${article.title} ${article.category} ${article.excerpt}`.toLocaleLowerCase().includes(query))
+          (!query || `${article.title} ${article.category} ${article.excerpt} ${(article.body || []).join(' ')}`.toLocaleLowerCase().includes(query))
           && (!category || article.category === category));
         renderCards(container, filtered, createArticleCard,
-          query || category ? 'No articles match these filters.' : 'No articles have been published yet.');
+          query || category ? 'No articles match these filters.' : 'No articles have been published yet.',
+          'article', !query && !category && articles.length < Number(container.dataset.placeholderCount));
       });
     };
     articleFilter?.addEventListener('input', renderArticles);
@@ -200,13 +218,15 @@ fetch(contentUrl)
 
     document.querySelectorAll('[data-linkedin-posts]').forEach(container => {
       const limit = Number(container.dataset.limit);
-      renderCards(container, Number.isFinite(limit) ? linkedinPosts.slice(0, limit) : linkedinPosts,
-        createLinkedInCard, 'No LinkedIn post previews have been added yet. Visit the profile for updates.');
+      const posts = Number.isFinite(limit) ? linkedinPosts.slice(0, limit) : linkedinPosts;
+      renderCards(container, posts, createLinkedInCard,
+        'No LinkedIn post previews have been added yet. Visit the profile for updates.',
+        'linkedin', posts.length < Number(container.dataset.placeholderCount));
     });
 
     const postSlug = new URLSearchParams(window.location.search).get('post');
     if (postSlug) {
-      const listing = document.querySelector('[data-insights-listing]');
+      const listing = document.querySelector('[data-article-listing]');
       const reader = document.querySelector('[data-article-reader]');
       const article = articles.find(item => item.slug === postSlug);
       if (listing && reader && article) {

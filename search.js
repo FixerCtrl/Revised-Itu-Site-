@@ -21,7 +21,8 @@ const siteEntries = [
   { title: 'Sappi Annual Value Award', category: 'Award', url: 'awards.html', text: '2021 project execution COVID-19' },
   { title: 'General Manager’s Award', category: 'Award', url: 'awards.html', text: '2024 Accolade stage gate financial metrics roll out' },
   { title: 'Global Catalyst Compass Award nominee', category: 'Award', url: 'awards.html', text: '2013 BASF PGM recycle inventory optimisation' },
-  { title: 'Insights and Journal', category: 'Insights', url: 'insights.html', text: 'writing articles posts journal reflections engineering finance innovation leadership no published posts' },
+  { title: 'Blogs', category: 'Blogs', url: 'blogs.html', text: 'writing articles posts journal reflections engineering finance innovation leadership blog archive' },
+  { title: 'LinkedIn updates', category: 'LinkedIn', url: 'insights.html', text: 'selected LinkedIn posts professional updates and conversations' },
   { title: 'Project readiness worksheet', category: 'Resource', url: 'resources.html', text: 'engineering technical commercial investment project checklist evidence operations case decision readiness' },
   { title: 'Contact and advisory enquiries', category: 'Contact', url: 'contact.html', text: 'email phone advisory board speaking Pretoria technical due diligence commercialisation process sustainability market analysis' }
 ];
@@ -102,7 +103,7 @@ if (searchInput && results) {
         searchableEntries.push({
           title: article.title,
           category: article.category || 'Article',
-          url: `insights.html?post=${encodeURIComponent(article.slug)}`,
+          url: `blogs.html?post=${encodeURIComponent(article.slug)}`,
           text: `${article.excerpt || ''} ${(article.body || []).join(' ')}`
         });
       });
